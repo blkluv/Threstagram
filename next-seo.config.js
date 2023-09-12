@@ -1,24 +1,24 @@
 export default {
-  title: 'Threstagram - Threads to Images',
-  defaultTitle: 'Threstagram - Threads to Images',
-  description: 'Convert Your Threads Posts to Images',
+  title: 'Threadpic - Threads to Pics',
+  defaultTitle: 'Threadpic - Threads to Pics',
+  description: 'Convert Your Threads Posts to Pics',
   openGraph: {
     type: 'website',
-    url: 'https://threstagram.vercel.app',
-    title: 'Threstagram - Threads to Images',
-    description: 'Convert Your Threads Posts to Images',
+    url: 'https://threadpic.arvrtise.com',
+    title: 'Threadpic - Threads to Pics',
+    description: 'Convert Your Threads Posts to Custom Pictures',
     images: [
       {
-        url: 'https://github-production-user-asset-6210df.s3.amazonaws.com/78784850/263960112-c1cb2dba-2379-4aa4-aba1-5ac124f7bcae.png',
-        alt: 'Threstagram Alt',
+        url: 'https://i.ibb.co/X5BTZrL/263960112-c1cb2dba-2379-4aa4-aba1-5ac124f7bcae.jpg',
+        alt: 'Threadpic Alt',
         height: 600,
         width: 800,
       },
     ],
-    'site-name': 'Threstagram',
+    'site-name': 'Threadpic',
   },
   twitter: {
-    handle: '@dunsincodes',
+    handle: '@arvrtise',
     cardType: 'summary_large_image',
   },
 };
