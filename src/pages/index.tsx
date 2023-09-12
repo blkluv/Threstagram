@@ -45,7 +45,7 @@ export default function Home() {
         className='absolute h-screen w-screen bg-repeat-x'
         style={{
           backgroundImage:
-            "url('https://e0.pxfuel.com/wallpapers/487/755/desktop-wallpaper-black-and-blue-black-blue-backgrounds-new.jpg')",
+            "url('https://i.ibb.co/9vcdmbG/desktop-wallpaper-black-and-blue-black-blue-backgrounds-new.jpg')",
         }}
       />
 
