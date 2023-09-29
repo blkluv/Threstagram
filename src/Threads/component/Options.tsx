@@ -5,14 +5,17 @@ import ColorPicker from 'react-pick-color';
 import { PongSpinner } from 'react-spinners-kit';
 
 import FontPicker from './FontPicker';
-import Themes from '../components/Themes';
+import Themes from '../Themes';
 
-import { extractUserName } from '../utils/helper';
-import { getUserProfile } from '../utils/api';
+import { extractUserName } from '../../utils/helper';
+import { getUserProfile } from '../../utils/api';
 
 import { useContent } from '../context/ContentContext';
 import { useUser } from '../context/UserContext';
 import { useOptions } from '../context/OptionsContext';
+
+import Input from '../../components/Input';
+import SubmitButton from '../../components/Button/SubmitButton';
 
 type OptionsTypeProps = {
   setPostURL: Dispatch<SetStateAction<string>>;
@@ -25,13 +28,14 @@ const Options = (props: OptionsTypeProps) => {
   const { optionsState, dispatchOptions } = useOptions();
   const { dispatchUser } = useUser();
 
-  const { color } = optionsState;
+  const { color, fontColor } = optionsState;
 
   const [urlLoading, seturlLoading] = useState(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const [isPickerOpen, setIsPickerOpen] = useState({
     color1: false,
     color2: false,
+    fontColor: false,
   });
   const [addColor, setAddColor] = useState(false);
 
@@ -46,9 +50,9 @@ const Options = (props: OptionsTypeProps) => {
 
       if (
         isClickOutsideColorPicker &&
-        (isPickerOpen.color1 || isPickerOpen.color2)
+        (isPickerOpen.color1 || isPickerOpen.color2 || isPickerOpen.fontColor)
       ) {
-        setIsPickerOpen({ color1: false, color2: false });
+        setIsPickerOpen({ color1: false, color2: false, fontColor: false });
       }
     };
 
@@ -98,30 +102,20 @@ const Options = (props: OptionsTypeProps) => {
   };
 
   return (
-    <header className='w-full flex items-center justify-center flex-col relative max-h-full z-20'>
+    <header className='w-full flex items-center justify-center flex-col relative max-h-full'>
       <div className='w-4/5 max-w-[850px] h-full'>
         <div className='flex items-center justify-center w-full'>
-          <input
-            type='text'
-            placeholder='Threads Post URL'
-            ref={urlRef}
-            className='h-12 w-[80%] rounded-tl-md outline-none border-2 focus:border-brand px-4 text-primary'
-          />
+          <Input placeholder='Threads Post URL' refValue={urlRef} />
           {urlLoading ? (
             <span className='w-[20%] bg-brand flex items-center justify-center h-12 rounded-tr-md'>
               <PongSpinner size={30} color='#fff' loading={urlLoading} />
             </span>
           ) : (
-            <button
-              onClick={handleOnClick}
-              className='bg-brand rounded-tr-md h-12 px-6 font-medium w-[20%] flex justify-center items-center'
-            >
-              <span>Submit</span>
-            </button>
+            <SubmitButton handleOnClick={handleOnClick} />
           )}
         </div>
         {contentState.postContent.length !== 0 && (
-          <section className='w-full flex gap-4 justify-center relative select-none h-full'>
+          <section className='w-full flex gap-4 justify-center relative select-none'>
             <div
               className='flex items-center py-2 h-fit cursor-pointer'
               onClick={handleDropDown}
@@ -219,33 +213,39 @@ const Options = (props: OptionsTypeProps) => {
                       />
                     </div>
 
-                    {/* Number of threads */}
+                    {/* Font Color */}
                     <div className='flex gap-2 items-center'>
-                      <p>Number of Threads: </p>
-                      <div>
-                        <select
-                          className='border-none w-12 p-2 rounded-md border-brand border-2 cursor-pointer bg-secondary'
-                          defaultValue={contentState.postContent.length}
-                          onChange={(event) => {
-                            const eventValue = Number(event.target.value);
-                            dispatchContent({
-                              type: 'SET_CONTENT',
-                              payload: contentState.postContent.slice(
-                                0,
-                                eventValue
-                              ),
-                            });
+                      <p>Font Color: </p>
+                      <span>
+                        <div
+                          className='h-8 w-8 rounded-md cursor-pointer border border-black'
+                          style={{
+                            backgroundColor: fontColor,
                           }}
-                        >
-                          {numbers(contentState.postContent.length).map(
-                            (value) => (
-                              <option value={value} key={value}>
-                                {value}
-                              </option>
-                            )
-                          )}
-                        </select>
-                      </div>
+                          onClick={() =>
+                            setIsPickerOpen({
+                              ...isPickerOpen,
+                              fontColor: !isPickerOpen.fontColor,
+                            })
+                          }
+                        />
+                        {isPickerOpen.fontColor && (
+                          <span
+                            className='absolute top-20 left-[30%]'
+                            ref={colorPickerRef}
+                          >
+                            <ColorPicker
+                              color={fontColor}
+                              onChange={(color) =>
+                                dispatchOptions({
+                                  type: 'SET_FONTCOLOR',
+                                  payload: color.hex,
+                                })
+                              }
+                            />
+                          </span>
+                        )}
+                      </span>
                     </div>
 
                     {/* Custom Font */}
@@ -274,12 +274,3 @@ const Options = (props: OptionsTypeProps) => {
 };
 
 export default Options;
-
-function numbers(postNumber: number) {
-  const number = [];
-  for (let index = 1; index < postNumber + 1; index++) {
-    number.push(index);
-  }
-
-  return number;
-}

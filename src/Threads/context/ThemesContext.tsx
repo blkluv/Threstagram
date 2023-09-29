@@ -1,9 +1,9 @@
 import { createContext, useContext, useReducer } from 'react';
-import { ThemesReducer, initialThemesState } from '../reducers/ThemesReducer';
+import { ThemesReducer, initialThemesState } from '../reducer/ThemesReducer';
 
 type ThemesContextType = {
   themesState: {
-    theme: 'dark' | 'light';
+    theme: 'number' | 'noNumber';
     themeName: string;
   };
   dispatchThemes: React.Dispatch<any>;

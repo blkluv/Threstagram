@@ -1,4 +1,4 @@
-import { ContentStateType } from '../../reducers/ContentReducer';
+import { ContentStateType } from '../reducer/ContentReducer';
 import { ColorType } from '../../types';
 
 export const pasteAsPlainText = (event) => {
@@ -51,4 +51,16 @@ export const handleKeyDown = (e) => {
         break;
     }
   }
+};
+
+export const deleteContent = (
+  index: number,
+  contentState: ContentStateType,
+  dispatchContent: any
+) => {
+  const newArray = [...contentState.postContent];
+
+  newArray.splice(index, 1);
+
+  dispatchContent({ type: 'SET_CONTENT', payload: newArray });
 };
