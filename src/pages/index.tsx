@@ -11,7 +11,7 @@ export default function Home() {
         }}
       />
       <div className='flex items-center w-full flex-col justify-center overflow-scroll bg-white-400 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-10 h-full pb-10 gap-4'>
-        <h1 className='font-bold text-f3xl'>Threstagram</h1>
+        <h1 className='font-bold text-f3xl'>Grambox</h1>
         <h2 className='font-semibold text-f2xl -mt-7'>
           Welcome to the social toolbox
         </h2>
